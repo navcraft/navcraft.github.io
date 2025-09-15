@@ -169,31 +169,13 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
+Vision-and-Language Navigation (VLN) has made progress on long-horizon, multi-stage missions. Yet prevailing formulations remain single-agent–centric, which constrains multi-robot execution by limiting parallelism, ignoring inter-robot interference, and overlooking time and energy efficiency.
           </p>
           <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
+To address these limitations, we propose a new benchmark, termed Collaborative Long-Horizon VLN (CLH-VLN), targeting task-to-team decomposition and efficiency-aware role allocation for collaborative robots. To support CLH-VLN at scale, we introduce NavCraft, an automated, graph-grounded platform. It implements a two-stage hierarchical LLM agent. NavCraft-S proposes a long-horizon base mission for the primary robot. NavCraft-C then instantiates helper robots, subgoals, and handoffs tailored to that mission. The agents operate scene-graph-in-the-loop over a semantics-and-geometry-aware scene graph derived from Habitat-Sim. This enables reachability checks, travel-time and energy estimation, and interference assessment with iterative plan repair. An on-graph efficiency skill library then helps agents optimize team size, subgoal assignment, and rendezvous scheduling in a closed loop.
           </p>
           <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
+To accurately evaluate complex tasks, we release Collaborative Long-Horizon Planning and Reasoning for VLN (CLHPR-VLN), a benchmark of 4,048 single and collaborative episodes with a Collaboration-Type (CT) taxonomy for controlled analysis. To our knowledge, it is the first benchmark specifically designed for CLH-VLN. CLHPR-VLN achieves 20\% average efficiency improvement and higher success rates over single-robot-based VLN. 
           </p>
         </div>
       </div>
