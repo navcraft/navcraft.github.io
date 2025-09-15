@@ -39,6 +39,10 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <style>
+    /* Uniform square video tiles */
+    .video-square { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 8px; background: #000; }
+  </style>
 </head>
 <body>
 
@@ -65,15 +69,15 @@
         <h2 class="title is-3">Video</h2>
         <div class="columns is-vcentered">
           <div class="column">
-            <video src="./static/videos/0_0.mp4" controls playsinline style="width:100%; border-radius:8px;"></video>
+            <video src="./static/videos/0_0.mp4" class="video-square" controls autoplay muted loop playsinline></video>
             <p class="has-text-grey" style="margin-top:.5rem;">top-view</p>
           </div>
           <div class="column">
-            <video src="./static/videos/0_1.mp4" controls playsinline style="width:100%; border-radius:8px;"></video>
+            <video src="./static/videos/0_1.mp4" class="video-square" controls autoplay muted loop playsinline></video>
             <p class="has-text-grey" style="margin-top:.5rem;">robot 1</p>
           </div>
           <div class="column">
-            <video src="./static/videos/0_2.mp4" controls playsinline style="width:100%; border-radius:8px;"></video>
+            <video src="./static/videos/0_2.mp4" class="video-square" controls autoplay muted loop playsinline></video>
             <p class="has-text-grey" style="margin-top:.5rem;">robot_2</p>
           </div>
         </div>
