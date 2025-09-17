@@ -50,7 +50,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h1 class="title is-1 publication-title">NavCraft: Synthesizing Collaborative Long-Horizon Vision-Language Navigation Tasks via Hierarchical LLM Agents</h1>
+        <h1 class="title is-1 publication-title">CoNavBench: Benchmarking Collaborative Long-Horizon Vision-Language Navigation</h1>
         <div class="is-size-5 publication-authors">
           <span class="author-block">Anonymous Authors</span>
         </div>
@@ -169,14 +169,11 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-Vision-and-Language Navigation (VLN) has made progress on long-horizon, multi-stage missions. Yet prevailing formulations remain single-agent–centric, which constrains multi-robot execution by limiting parallelism, ignoring inter-robot interference, and overlooking time and energy efficiency.
-          </p>
+Vision-and-Language Navigation (VLN) primarily focuses on a single-agent-centric approach that executes human instructions step-by-step. In real environments with high demand or parallel workflows, collaboration VLN offers distinct benefits including shorter makespan and greater robustness through parallelism and role specialization. Collaboration VLN also brings new challenges including congestion, handoff errors, and rendezvous timing, which single-agent formulations overlook. Current datasets and protocols remain single-agent centered, which hides opportunities for assistance and ignores inter-robot interference.          </p>
           <p>
-To address these limitations, we propose a new benchmark, termed Collaborative Long-Horizon VLN (CLH-VLN), targeting task-to-team decomposition and efficiency-aware role allocation for collaborative robots. To support CLH-VLN at scale, we introduce NavCraft, an automated, graph-grounded platform. It implements a two-stage hierarchical LLM agent. NavCraft-S proposes a long-horizon base mission for the primary robot. NavCraft-C then instantiates helper robots, subgoals, and handoffs tailored to that mission. The agents operate scene-graph-in-the-loop over a semantics-and-geometry-aware scene graph derived from Habitat-Sim. This enables reachability checks, travel-time and energy estimation, and interference assessment with iterative plan repair. An on-graph efficiency skill library then helps agents optimize team size, subgoal assignment, and rendezvous scheduling in a closed loop.
-          </p>
+We fill this gap with Collaborative Long-Horizon Planning and Reasoning VLN benchmark (\textbf{CLHPR-VLN}), consisting of 4048 single and collaborative episodes with graph-level annotations and a collaboration type taxonomy that controls handoff styles and rendezvous patterns. To generate and evaluate at scale, we build \textbf{NavCraft}, an automated graph-grounded data generation platform. A two-stage hierarchical agent first produces a long-horizon base mission for the primary robot and then instantiates helper robots, allocates subgoals, and specifies validated handoffs and rendezvous. The agents operate with a scene graph in the loop derived from Habitat-Sim, which enables reachability checks, travel time, and interference assessment, and iterative schedule repair via an efficiency tool library.          </p>
           <p>
-To accurately evaluate complex tasks, we release Collaborative Long-Horizon Planning and Reasoning for VLN (CLHPR-VLN), a benchmark of 4,048 single and collaborative episodes with a Collaboration-Type (CT) taxonomy for controlled analysis. To our knowledge, it is the first benchmark specifically designed for CLH-VLN. CLHPR-VLN achieves 20\% average efficiency improvement and higher success rates over single-robot-based VLN. 
-          </p>
+As a reference, we provide a collaborative baseline based on a finetuned Qwen2.5-VL-3B with a memory-aware mechanism. Trained with CLHPR-VLN, collaborative policies reduce makespan and improve reliability over strong single robot counterparts, yielding \textbf{18.11\%} step level success.         </p>
         </div>
       </div>
     </div>
