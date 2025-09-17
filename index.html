@@ -43,9 +43,29 @@
     /* Uniform square video tiles */
     .video-square { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 8px; background: #000; }
     html { scroll-behavior: smooth; }
+    /* Left sidebar for section navigation */
+    .section-nav { position: fixed; top: 96px; left: 16px; width: 220px; z-index: 50; }
+    .has-left-nav { padding-left: 260px; }
+    .section-nav .menu { border: 1px solid rgba(0,0,0,.08); border-radius: 8px; padding: .5rem .75rem; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.04); }
+    .section-nav .menu-list a.is-active { font-weight: 600; text-decoration: underline; }
+    /* Hide sidebar on tablets/phones */
+    @media (max-width: 1023px) { .section-nav { display: none; } .has-left-nav { padding-left: 0; } }
   </style>
 </head>
-<body>
+<body class="has-left-nav">
+
+<aside class="section-nav" aria-label="Section navigation">
+  <div class="menu">
+    <p class="menu-label">Sections</p>
+    <ul class="menu-list">
+      <li><a href="#video">Demonstration Videos</a></li>
+      <li><a href="#overview-figure">Motivation</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#clhpr-benchmark">CLHPR-Benchmark</a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
+  </div>
+</aside>
 
 <section class="section" id="top">
   <div class="container is-max-desktop">
@@ -59,10 +79,10 @@
           <span class="author-block">Anonymous Affiliation</span>
         </div>
         <div class="buttons is-centered" style="margin-top:1rem; flex-wrap: wrap; gap:.5rem;">
-          <a class="button is-primary is-light is-small" href="#video" aria-label="Go to Demonstration Videos">Demonstration Videos</a>
-          <a class="button is-primary is-light is-small" href="#overview-figure" aria-label="Go to Motivation">Motivation</a>
-          <a class="button is-primary is-light is-small" href="#method" aria-label="Go to Method">Method</a>
-          <a class="button is-primary is-light is-small" href="#clhpr-benchmark" aria-label="Go to CLHPR-Benchmark">CLHPR-Benchmark</a>
+          <a class="button is-link is-small" href="#video" aria-label="Go to Demonstration Videos">Demonstration Videos</a>
+          <a class="button is-link is-small" href="#overview-figure" aria-label="Go to Motivation">Motivation</a>
+          <a class="button is-link is-small" href="#method" aria-label="Go to Method">Method</a>
+          <a class="button is-link is-small" href="#clhpr-benchmark" aria-label="Go to CLHPR-Benchmark">CLHPR-Benchmark</a>
         </div>
       </div>
     </div>
