@@ -41,7 +41,7 @@
   <script src="./static/js/index.js"></script>
   <style>
     /* Uniform square video tiles */
-    .video-square { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 8px; background: #000; }
+    .video-square { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 8px; background: #000; transition: transform .18s ease, box-shadow .18s ease; }
     html { scroll-behavior: smooth; }
     /* Left sidebar for section navigation */
     .section-nav { position: fixed; top: 96px; left: 16px; width: 220px; z-index: 50; }
@@ -50,6 +50,18 @@
     .section-nav .menu-list a.is-active { font-weight: 600; text-decoration: underline; }
     /* Hide sidebar on tablets/phones */
     @media (max-width: 1023px) { .section-nav { display: none; } .has-left-nav { padding-left: 0; } }
+    :root { --brand:#2563eb; }
+    /* Active state for top buttons */
+    .buttons a.is-active { box-shadow: inset 0 -2px 0 var(--brand); }
+    /* Hover lift on videos */
+    .video-square:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+    /* Gentle section dividers */
+    .section + .section { border-top: 1px solid rgba(0,0,0,.06); }
+    /* Mobile floating back-to-top button */
+    .fab-top { position: fixed; right: 16px; bottom: 16px; display: none; z-index: 70; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+    .fab-top.is-visible { opacity: 1; pointer-events: auto; }
+    .fab-top .button { border-radius: 9999px; box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+    @media (max-width: 1023px) { .fab-top { display: block; } }
   </style>
 </head>
 <body class="has-left-nav">
@@ -66,6 +78,12 @@
     </ul>
   </div>
 </aside>
+
+<div class="fab-top">
+  <a href="#top" class="button is-link" aria-label="Back to top">
+    <span class="icon"><i class="fas fa-arrow-up"></i></span>
+  </a>
+</div>
 
 <section class="section" id="top">
   <div class="container is-max-desktop">
@@ -263,6 +281,39 @@ As a reference, we provide a collaborative baseline based on a finetuned Qwen2.5
     </div>
   </div>
 </footer>
+
+<script>
+(function() {
+  const sectionIds = ['video','overview-figure','method','clhpr-benchmark'];
+  const links = Array.from(document.querySelectorAll('.section-nav .menu-list a, .buttons a[href^="#"]'));
+  const map = {};
+  links.forEach(a => {
+    const hash = a.getAttribute('href');
+    if (hash && hash.startsWith('#')) {
+      const id = hash.slice(1);
+      (map[id] = map[id] || []).push(a);
+    }
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      if (!map[id]) return;
+      if (entry.isIntersecting) {
+        Object.values(map).forEach(arr => arr.forEach(el => el.classList.remove('is-active')));
+        map[id].forEach(el => el.classList.add('is-active'));
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px', threshold: 0.2 });
+
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+
+  // Mobile back-to-top visibility
+  const fab = document.querySelector('.fab-top');
+  const onScroll = () => { if (!fab) return; if (window.scrollY > 600) fab.classList.add('is-visible'); else fab.classList.remove('is-visible'); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
 
 </body>
 </html>
