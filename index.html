@@ -73,7 +73,7 @@
       <li><a href="#video">Demonstration Videos</a></li>
       <li><a href="#overview-figure">Motivation</a></li>
       <li><a href="#method">Method</a></li>
-      <li><a href="#clhpr-benchmark">CLHPR-Benchmark</a></li>
+      <li><a href="#conavbench">CoNavBench</a></li>
       <li><a href="#top">Back to top</a></li>
     </ul>
   </div>
@@ -100,7 +100,7 @@
           <a class="button is-link is-small" href="#video" aria-label="Go to Demonstration Videos">Demonstration Videos</a>
           <a class="button is-link is-small" href="#overview-figure" aria-label="Go to Motivation">Motivation</a>
           <a class="button is-link is-small" href="#method" aria-label="Go to Method">Method</a>
-          <a class="button is-link is-small" href="#clhpr-benchmark" aria-label="Go to CLHPR-Benchmark">CLHPR-Benchmark</a>
+          <a class="button is-link is-small" href="#conavbench" aria-label="Go to CoNavBench">CoNavBench</a>
         </div>
       </div>
     </div>
@@ -214,12 +214,9 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-Vision-and-Language Navigation (VLN) primarily focuses on a single-agent-centric approach that executes human instructions step-by-step. In real environments with high demand or parallel workflows, collaboration VLN offers distinct benefits including shorter makespan and greater robustness through parallelism and role specialization. Collaboration VLN also brings new challenges including congestion, handoff errors, and rendezvous timing, which single-agent formulations overlook. Current datasets and protocols remain single-agent centered, which hides opportunities for assistance and ignores inter-robot interference.          </p>
-          <p>
-We fill this gap with Collaborative Long-Horizon Planning and Reasoning VLN benchmark (\textbf{CLHPR-VLN}), consisting of 4048 single and collaborative episodes with graph-level annotations and a collaboration type taxonomy that controls handoff styles and rendezvous patterns. To generate and evaluate at scale, we build \textbf{NavCraft}, an automated graph-grounded data generation platform. A two-stage hierarchical agent first produces a long-horizon base mission for the primary robot and then instantiates helper robots, allocates subgoals, and specifies validated handoffs and rendezvous. The agents operate with a scene graph in the loop derived from Habitat-Sim, which enables reachability checks, travel time, and interference assessment, and iterative schedule repair via an efficiency tool library.          </p>
-          <p>
-As a reference, we provide a collaborative baseline based on a finetuned Qwen2.5-VL-3B with a memory-aware mechanism. Trained with CLHPR-VLN, collaborative policies reduce makespan and improve reliability over strong single robot counterparts, yielding \textbf{18.11\%} step level success.         </p>
-        </div>
+Vision-and-Language Navigation (VLN) primarily focuses on a single-agent-centric approach that executes human instructions step-by-step. In real environments with high demand or parallel workflows, collaboration VLN offers distinct benefits including shorter makespan and greater robustness through parallelism and role specialization. Collaboration VLN also brings new challenges including congestion, handoff errors, and rendezvous timing, which single-agent formulations overlook. Current datasets and protocols remain single-agent centered, which hides opportunities for assistance and ignores inter-robot interference.           <p>
+We fill this gap with Collaborative Long-Horizon VLN benchmark (\textbf{CoNavBench}), consisting of 4048 single and collaborative episodes with graph-level annotations and a collaboration type taxonomy that controls handoff styles and rendezvous patterns. To generate and evaluate at scale, we build \textbf{NavCraft}, an automated graph-grounded data generation platform. A two-stage hierarchical agent first produces a long-horizon base mission for the primary robot and then instantiates helper robots, allocates subgoals, and specifies validated handoffs and rendezvous. The agents operate with a scene graph in the loop derived from Habitat-Sim, which enables reachability checks, travel time, and interference assessment, and iterative schedule repair via an efficiency tool library.          <p>
+As a reference, we provide a collaborative baseline based on a finetuned Qwen2.5-VL-3B with a memory-aware mechanism. Trained with CoNavBench, collaborative policies reduce makespan and improve reliability over strong single robot counterparts, yielding \textbf{18.11\%} step level success.        </div>
       </div>
     </div>
     <!--/ Abstract. -->
