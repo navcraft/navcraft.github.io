@@ -1,316 +1,441 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="CoNavBench: Collaborative Long-Horizon Vision-Language Navigation Benchmark.">
-  <meta name="keywords" content="NavCraft, Vision-Language Navigation, VLN, Long-Horizon, LLM Agents, Hierarchical, Multi-Agent">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CoNavBench: Collaborative Long-Horizon Vision-Language Navigation Benchmark</title>
+    <meta charset="utf-8">
+    <meta name="description" content="CoNavBench: Collaborative Long-Horizon Vision-Language Navigation Benchmark.">
+    <meta name="keywords"
+        content="NavCraft, Vision-Language Navigation, VLN, Long-Horizon, LLM Agents, Hierarchical, Multi-Agent">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CoNavBench: Collaborative Long-Horizon Vision-Language Navigation Benchmark</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+        function gtag() {
+            dataLayer.push(arguments);
+        }
 
-    gtag('js', new Date());
+        gtag('js', new Date());
 
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/images/favicon.svg">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
-  <style>
-    /* Uniform square video tiles */
-    .video-square { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 8px; background: #000; transition: transform .18s ease, box-shadow .18s ease; }
-    html { scroll-behavior: smooth; }
-    /* Left sidebar for section navigation */
-    .section-nav { position: fixed; top: 96px; left: 16px; width: 220px; z-index: 50; }
-    .has-left-nav { padding-left: 260px; }
-    .section-nav .menu { border: 1px solid rgba(0,0,0,.08); border-radius: 8px; padding: .5rem .75rem; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.04); }
-    .section-nav .menu-list a.is-active { font-weight: 600; text-decoration: underline; }
-    /* Hide sidebar on tablets/phones */
-    @media (max-width: 1023px) { .section-nav { display: none; } .has-left-nav { padding-left: 0; } }
-    :root { --brand:#2563eb; }
-    /* Active state for top buttons */
-    .buttons a.is-active { box-shadow: inset 0 -2px 0 var(--brand); }
-    /* Hover lift on videos */
-    .video-square:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
-    /* Gentle section dividers */
-    .section + .section { border-top: 1px solid rgba(0,0,0,.06); }
-    /* Mobile floating back-to-top button */
-    .fab-top { position: fixed; right: 16px; bottom: 16px; display: none; z-index: 70; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
-    .fab-top.is-visible { opacity: 1; pointer-events: auto; }
-    .fab-top .button { border-radius: 9999px; box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-    @media (max-width: 1023px) { .fab-top { display: block; } }
-  </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <style>
+        /* Uniform square video tiles */
+        .video-square {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #000;
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Left sidebar for section navigation */
+        .section-nav {
+            position: fixed;
+            top: 96px;
+            left: 16px;
+            width: 220px;
+            z-index: 50;
+        }
+
+        .has-left-nav {
+            padding-left: 260px;
+        }
+
+        .section-nav .menu {
+            border: 1px solid rgba(0, 0, 0, .08);
+            border-radius: 8px;
+            padding: .5rem .75rem;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .04);
+        }
+
+        .section-nav .menu-list a.is-active {
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* Hide sidebar on tablets/phones */
+        @media (max-width: 1023px) {
+            .section-nav {
+                display: none;
+            }
+
+            .has-left-nav {
+                padding-left: 0;
+            }
+        }
+
+        :root {
+            --brand: #2563eb;
+        }
+
+        /* Active state for top buttons */
+        .buttons a.is-active {
+            box-shadow: inset 0 -2px 0 var(--brand);
+        }
+
+        /* Hover lift on videos */
+        .video-square:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+        }
+
+        /* Gentle section dividers */
+        .section+.section {
+            border-top: 1px solid rgba(0, 0, 0, .06);
+        }
+
+        /* Mobile floating back-to-top button */
+        .fab-top {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            display: none;
+            z-index: 70;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease;
+        }
+
+        .fab-top.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .fab-top .button {
+            border-radius: 9999px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .18);
+        }
+
+        @media (max-width: 1023px) {
+            .fab-top {
+                display: block;
+            }
+        }
+    </style>
 </head>
+
 <body class="has-left-nav">
 
-<aside class="section-nav" aria-label="Section navigation">
-  <div class="menu">
-    <p class="menu-label">Sections</p>
-    <ul class="menu-list">
-      <li><a href="#video">Demonstration Videos</a></li>
-      <li><a href="#overview-figure">Motivation</a></li>
-      <li><a href="#method">Method</a></li>
-      <li><a href="#conavbench">CoNavBench</a></li>
-      <li><a href="#top">Back to top</a></li>
-    </ul>
-  </div>
-</aside>
+    <aside class="section-nav" aria-label="Section navigation">
+        <div class="menu">
+            <p class="menu-label">Sections</p>
+            <ul class="menu-list">
+                <li><a href="#real-robots-demo">Real Robots Demo</a></li>
+                <li><a href="#video">Demonstration Videos</a></li>
+                <li><a href="#overview-figure">Motivation</a></li>
+                <li><a href="#method">Method</a></li>
+                <li><a href="#conavbench">CoNavBench</a></li>
+                <li><a href="#top">Back to top</a></li>
+            </ul>
+        </div>
+    </aside>
 
-<div class="fab-top">
-  <a href="#top" class="button is-link" aria-label="Back to top">
-    <span class="icon"><i class="fas fa-arrow-up"></i></span>
-  </a>
-</div>
-
-<section class="section" id="top">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h1 class="title is-1 publication-title">CoNavBench: Collaborative Long-Horizon Vision-Language Navigation Benchmark</h1>
-        <div class="is-size-5 publication-authors">
-          <span class="author-block">Anonymous Authors</span>
-        </div>
-        <div class="is-size-5 publication-authors">
-          <span class="author-block">Anonymous Affiliation</span>
-        </div>
-        <div class="buttons is-centered" style="margin-top:1rem; flex-wrap: wrap; gap:.5rem;">
-          <a class="button is-link is-small" href="#video" aria-label="Go to Demonstration Videos">Demonstration Videos</a>
-          <a class="button is-link is-small" href="#overview-figure" aria-label="Go to Motivation">Motivation</a>
-          <a class="button is-link is-small" href="#method" aria-label="Go to Method">Method</a>
-          <a class="button is-link is-small" href="#conavbench" aria-label="Go to CoNavBench">CoNavBench</a>
-        </div>
-      </div>
+    <div class="fab-top">
+        <a href="#top" class="button is-link" aria-label="Back to top">
+            <span class="icon"><i class="fas fa-arrow-up"></i></span>
+        </a>
     </div>
-  </div>
-</section>
 
-<section class="section" id="video">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Demonstration Videos</h2>
-        <p class="has-text-grey" style="margin-top:.5rem;">
-          Left column: top-view (left: single agent; right: multi agent; blue trajectory represent robot 1; orange trajectory represent robot 2). Middle column: robot 1. Right column: robot 2.
-        </p>
-        <div class="columns is-vcentered">
-          <div class="column">
-            <video src="./static/videos/0_0.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/0_1.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/0_2.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
+    <section class="section" id="top">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h1 class="title is-1 publication-title">CoNavBench: Collaborative Long-Horizon Vision-Language
+                        Navigation Benchmark</h1>
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block">Anonymous Authors</span>
+                    </div>
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block">Anonymous Affiliation</span>
+                    </div>
+                    <div class="buttons is-centered" style="margin-top:1rem; flex-wrap: wrap; gap:.5rem;">
+                        <a class="button is-link is-small" href="#video"
+                            aria-label="Go to Demonstration Videos">Demonstration Videos</a>
+                        <a class="button is-link is-small" href="#overview-figure"
+                            aria-label="Go to Motivation">Motivation</a>
+                        <a class="button is-link is-small" href="#method" aria-label="Go to Method">Method</a>
+                        <a class="button is-link is-small" href="#conavbench"
+                            aria-label="Go to CoNavBench">CoNavBench</a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="columns is-vcentered" style="margin-top:1.25rem;">
-          <div class="column">
-            <video src="./static/videos/1_0.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/1_1.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/1_2.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
+    <section class="section" id="video">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Demonstration Videos</h2>
+                    <p class="has-text-grey" style="margin-top:.5rem;">
+                        Left column: top-view (left: single agent; right: multi agent; blue trajectory represent robot
+                        1; orange trajectory represent robot 2). Middle column: robot 1. Right column: robot 2.
+                    </p>
+                    <div class="columns is-vcentered">
+                        <div class="column">
+                            <video src="./static/videos/0_0.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/0_1.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/0_2.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                    </div>
+
+                    <div class="columns is-vcentered" style="margin-top:1.25rem;">
+                        <div class="column">
+                            <video src="./static/videos/1_0.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/1_1.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/1_2.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                    </div>
+
+                    <div class="columns is-vcentered" style="margin-top:1.25rem;">
+                        <div class="column">
+                            <video src="./static/videos/2_0.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/2_1.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/2_2.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                    </div>
+
+                    <div class="columns is-vcentered" style="margin-top:1.25rem;">
+                        <div class="column">
+                            <video src="./static/videos/3_0.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/3_1.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/3_2.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                    </div>
+
+                    <div class="columns is-vcentered" style="margin-top:1.25rem;">
+                        <div class="column">
+                            <video src="./static/videos/4_0.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/4_1.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/4_2.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                    </div>
+
+                    <div class="columns is-vcentered" style="margin-top:1.25rem;">
+                        <div class="column">
+                            <video src="./static/videos/5_0.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/5_1.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                        <div class="column">
+                            <video src="./static/videos/5_2.mp4" class="video-square" controls autoplay muted loop
+                                playsinline></video>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="columns is-vcentered" style="margin-top:1.25rem;">
-          <div class="column">
-            <video src="./static/videos/2_0.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/2_1.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/2_2.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
+    <section class="section" id="overview-figure">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Motivation</h2>
+                    <figure class="image">
+                        <img src="./static/images/intro.png" alt="Figure 1: Overview illustration for NavCraft.">
+                        <figcaption class="has-text-centered has-text-grey" style="margin-top:.5rem;">Figure 1: Overview
+                            illustration for <em>NavCraft</em>.</figcaption>
+                    </figure>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="columns is-vcentered" style="margin-top:1.25rem;">
-          <div class="column">
-            <video src="./static/videos/3_0.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/3_1.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/3_2.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
+    <section class="section">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Vision-and-Language Navigation (VLN) primarily focuses on a single-agent-centric approach
+                            that executes human instructions step-by-step. In real environments with high demand or
+                            parallel workflows, collaboration VLN offers distinct benefits including shorter makespan
+                            and greater robustness through parallelism and role specialization. Collaboration VLN also
+                            brings new challenges including congestion, handoff errors, and rendezvous timing, which
+                            single-agent formulations overlook. Current datasets and protocols remain single-agent
+                            centered, which hides opportunities for assistance and ignores inter-robot interference.
+                        <p>
+                            We fill this gap with Collaborative Long-Horizon VLN benchmark (\textbf{CoNavBench}),
+                            consisting of 4048 single and collaborative episodes with graph-level annotations and a
+                            collaboration type taxonomy that controls handoff styles and rendezvous patterns. To
+                            generate and evaluate at scale, we build \textbf{NavCraft}, an automated graph-grounded data
+                            generation platform. A two-stage hierarchical agent first produces a long-horizon base
+                            mission for the primary robot and then instantiates helper robots, allocates subgoals, and
+                            specifies validated handoffs and rendezvous. The agents operate with a scene graph in the
+                            loop derived from Habitat-Sim, which enables reachability checks, travel time, and
+                            interference assessment, and iterative schedule repair via an efficiency tool library.
+                        <p>
+                            As a reference, we provide a collaborative baseline based on a finetuned Qwen2.5-VL-3B with
+                            a memory-aware mechanism. Trained with CoNavBench, collaborative policies reduce makespan
+                            and improve reliability over strong single robot counterparts, yielding \textbf{18.11\%}
+                            step level success.
+                    </div>
+                </div>
+            </div>
+            <!--/ Abstract. -->
+
         </div>
+    </section>
 
-        <div class="columns is-vcentered" style="margin-top:1.25rem;">
-          <div class="column">
-            <video src="./static/videos/4_0.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/4_1.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/4_2.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
+    <section class="section" id="method">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Method</h2>
+                    <div class="content has-text-justified">
+                        <figure class="image">
+                            <img src="./static/images/pipeline.png" alt="Figure 2: Method pipeline for NavCraft.">
+                            <figcaption class="has-text-centered has-text-grey" style="margin-top:.5rem;">Figure 2:
+                                Method pipeline for <em>NavCraft</em>.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="columns is-vcentered" style="margin-top:1.25rem;">
-          <div class="column">
-            <video src="./static/videos/5_0.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/5_1.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
-          <div class="column">
-            <video src="./static/videos/5_2.mp4" class="video-square" controls autoplay muted loop playsinline></video>
-          </div>
+    <section class="section" id="conavbench">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">CoNavBench</h2>
+                    <div class="content has-text-justified">
+                        <figure class="image">
+                            <img src="./static/images/distribution3.png"
+                                alt="Figure 3: Data distribution of CoNavBench.">
+                            <figcaption class="has-text-centered has-text-grey" style="margin-top:.5rem;">Figure 3: Data
+                                distribution of <em>CoNavBench</em>.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="overview-figure">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Motivation</h2>
-        <figure class="image">
-          <img src="./static/images/intro.png" alt="Figure 1: Overview illustration for NavCraft.">
-          <figcaption class="has-text-centered has-text-grey" style="margin-top:.5rem;">Figure 1: Overview illustration for <em>NavCraft</em>.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-Vision-and-Language Navigation (VLN) primarily focuses on a single-agent-centric approach that executes human instructions step-by-step. In real environments with high demand or parallel workflows, collaboration VLN offers distinct benefits including shorter makespan and greater robustness through parallelism and role specialization. Collaboration VLN also brings new challenges including congestion, handoff errors, and rendezvous timing, which single-agent formulations overlook. Current datasets and protocols remain single-agent centered, which hides opportunities for assistance and ignores inter-robot interference.           <p>
-We fill this gap with Collaborative Long-Horizon VLN benchmark (\textbf{CoNavBench}), consisting of 4048 single and collaborative episodes with graph-level annotations and a collaboration type taxonomy that controls handoff styles and rendezvous patterns. To generate and evaluate at scale, we build \textbf{NavCraft}, an automated graph-grounded data generation platform. A two-stage hierarchical agent first produces a long-horizon base mission for the primary robot and then instantiates helper robots, allocates subgoals, and specifies validated handoffs and rendezvous. The agents operate with a scene graph in the loop derived from Habitat-Sim, which enables reachability checks, travel time, and interference assessment, and iterative schedule repair via an efficiency tool library.          <p>
-As a reference, we provide a collaborative baseline based on a finetuned Qwen2.5-VL-3B with a memory-aware mechanism. Trained with CoNavBench, collaborative policies reduce makespan and improve reliability over strong single robot counterparts, yielding \textbf{18.11\%} step level success.        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-  </div>
-</section>
-
-<section class="section" id="method">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Method</h2>
-        <div class="content has-text-justified">
-          <figure class="image">
-            <img src="./static/images/pipeline.png" alt="Figure 2: Method pipeline for NavCraft.">
-            <figcaption class="has-text-centered has-text-grey" style="margin-top:.5rem;">Figure 2: Method pipeline for <em>NavCraft</em>.</figcaption>
-          </figure>
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This website is licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p>
+                            This means you are free to borrow the <a href="https://navcraft.github.io/">source code</a>
+                            of this website,
+                            we just ask that you link back to this page in the footer.
+                            Please remember to remove the analytics code included in the header of the website which
+                            you do not want on your website.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </footer>
 
-<section class="section" id="conavbench">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">CoNavBench</h2>
-        <div class="content has-text-justified">
-          <figure class="image">
-            <img src="./static/images/distribution3.png" alt="Figure 3: Data distribution of CoNavBench.">
-            <figcaption class="has-text-centered has-text-grey" style="margin-top:.5rem;">Figure 3: Data distribution of <em>CoNavBench</em>.</figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <script>
+        (function () {
+            const sectionIds = ['real-robots-demo', 'video', 'overview-figure', 'method', 'conavbench'];
+            const links = Array.from(document.querySelectorAll('.section-nav .menu-list a, .buttons a[href^="#"]'));
+            const map = {};
+            links.forEach(a => {
+                const hash = a.getAttribute('href');
+                if (hash && hash.startsWith('#')) {
+                    const id = hash.slice(1);
+                    (map[id] = map[id] || []).push(a);
+                }
+            });
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = entry.target.id;
+                    if (!map[id]) return;
+                    if (entry.isIntersecting) {
+                        Object.values(map).forEach(arr => arr.forEach(el => el.classList.remove('is-active')));
+                        map[id].forEach(el => el.classList.add('is-active'));
+                    }
+                });
+            }, { rootMargin: '0px 0px -70% 0px', threshold: 0.2 });
 
-<footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://navcraft.github.io/">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+            sectionIds.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
 
-<script>
-(function() {
-  const sectionIds = ['video','overview-figure','method','conavbench'];
-  const links = Array.from(document.querySelectorAll('.section-nav .menu-list a, .buttons a[href^="#"]'));
-  const map = {};
-  links.forEach(a => {
-    const hash = a.getAttribute('href');
-    if (hash && hash.startsWith('#')) {
-      const id = hash.slice(1);
-      (map[id] = map[id] || []).push(a);
-    }
-  });
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const id = entry.target.id;
-      if (!map[id]) return;
-      if (entry.isIntersecting) {
-        Object.values(map).forEach(arr => arr.forEach(el => el.classList.remove('is-active')));
-        map[id].forEach(el => el.classList.add('is-active'));
-      }
-    });
-  }, { rootMargin: '0px 0px -70% 0px', threshold: 0.2 });
-
-  sectionIds.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
-
-  // Mobile back-to-top visibility
-  const fab = document.querySelector('.fab-top');
-  const onScroll = () => { if (!fab) return; if (window.scrollY > 600) fab.classList.add('is-visible'); else fab.classList.remove('is-visible'); };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
-</script>
+            // Mobile back-to-top visibility
+            const fab = document.querySelector('.fab-top');
+            const onScroll = () => { if (!fab) return; if (window.scrollY > 600) fab.classList.add('is-visible'); else fab.classList.remove('is-visible'); };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+    </script>
 
 </body>
+
 </html>
